@@ -19,10 +19,14 @@ namespace Arif.Scripts
 
         public PlayerController playerController;
         
-        [HideInInspector]public List<CollectableObject> collectedObjectsList = new List<CollectableObject>();
+        [HideInInspector]public List<CollectableImage> collectedImageList = new List<CollectableImage>();
 
-        public Transform bagOfHoldingSpawnTransform;
+        public RectTransform bagContentTransform;
+        public CollectableImage collectableImagePrefab;
 
+        public int maxItemCount=10;
+        
+        
         private void Awake()
         {
             Manager = this;
@@ -68,27 +72,18 @@ namespace Arif.Scripts
                 }
             }
         }
-
-
-        private CollectableObject _selectedCollectableObjectFromUI;
+        
 
         public void SelectObject()
         {
             if (Input.GetMouseButtonDown(0))
             {
                 RaycastHit hit;
-                RaycastHit hit2;
-
                 var ray = GameManager.Manager.mainCam.ScreenPointToRay(Input.mousePosition);
-                var ray2 = GameManager.Manager.overlayCam.ScreenPointToRay(Input.mousePosition);
+               
                 if (Physics.Raycast(ray,out hit))
                 {
-                    if (_selectedCollectableObjectFromUI)
-                    {
-                        RespawnObject(_selectedCollectableObjectFromUI,hit.point);
-                        _selectedCollectableObjectFromUI.meshRenderer.material.color = Color.green;
-                        _selectedCollectableObjectFromUI = null;
-                    }
+                   
                     var collectableObject = hit.collider.GetComponent<CollectableObject>();
                     if (collectableObject)
                     {
@@ -99,50 +94,23 @@ namespace Arif.Scripts
                     }
                 }
 
-                if (Physics.Raycast(ray2,out hit2))
-                {
-                    var collectableObject = hit2.collider.GetComponent<CollectableObject>();
-                    
-                    if (collectableObject)
-                    {
-                        SelectCollectableObjectFromUI(collectableObject);
-                    }
-                }
             }
         }
         
-        public void SelectCollectableObjectFromUI(CollectableObject collectableObject)
-        {
-            if (_selectedCollectableObjectFromUI)
-            {
-                _selectedCollectableObjectFromUI.meshRenderer.material.color = Color.green;
-            }
-            _selectedCollectableObjectFromUI = collectableObject;
-            _selectedCollectableObjectFromUI.meshRenderer.material.color = Color.cyan;
-        }
-
-        public void RespawnObject(CollectableObject collectableObject,Vector3 pos)
-        {
-            var cloneObject = Instantiate(collectableObject);
-            cloneObject.transform.SetParent(transform);
-            cloneObject.transform.position = pos;
-            cloneObject.transform.localRotation = Quaternion.identity;
-            cloneObject.transform.localScale = Vector3.one;
-            
-            cloneObject.MakeMeNormal();
-            
-            Destroy(collectableObject.gameObject);
-        }
-        
+       
         public void CollectObject(CollectableObject collectableObject)
         {
-            var cloneObject = Instantiate(collectableObject);
-            cloneObject.transform.SetParent(bagOfHoldingSpawnTransform);
-            cloneObject.transform.localPosition = Vector3.zero;
-            cloneObject.transform.localRotation = Quaternion.identity;
-            cloneObject.transform.localScale = Vector3.one;
-            
-            cloneObject.MakeMeUI();
+
+            if (collectedImageList.Count>=maxItemCount)
+            {
+                
+                Debug.Log("Doldu");
+                return;
+            }
+            var cloneObject = Instantiate(collectableImagePrefab,bagContentTransform);
+
+            cloneObject.myImage.sprite = collectableObject.mySprite;
+            collectedImageList.Add(cloneObject);
             
             Destroy(collectableObject.gameObject);
         }
