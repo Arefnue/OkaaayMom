@@ -28,8 +28,24 @@ namespace Arif.Scripts
         {
             if (LevelManager.Manager.currentLevelState == LevelManager.LevelStates.War)
             {
-                transform.SetParent(_myParent);
-                transform.position = _lastPos;
+                RaycastHit hit;
+                var ray = GameManager.Manager.overlayCam.ScreenPointToRay(Input.mousePosition);
+               
+                if (Physics.Raycast(ray,out hit))
+                {
+                    var cloneObject = Instantiate(myObject,hit.collider.GetComponent<Transform>().parent);
+                    cloneObject.transform.position = hit.point;
+                    cloneObject.gameObject.SetActive(true);
+                    cloneObject.MakeMeUI();
+                    LevelManager.Manager.RespawnObject(cloneObject);
+                    Destroy(gameObject);
+                }
+                else
+                {
+                    transform.SetParent(_myParent);
+                    transform.position = _lastPos;
+                
+                }
             }
             else
             {
@@ -41,6 +57,8 @@ namespace Arif.Scripts
                     var cloneObject = Instantiate(myObject,LevelManager.Manager.transform);
                     cloneObject.transform.position = hit.point;
                     cloneObject.gameObject.SetActive(true);
+                    cloneObject.MakeMeNormal();
+                    LevelManager.Manager.RespawnObject(cloneObject);
                     Destroy(gameObject);
                 }
                 else
@@ -50,7 +68,6 @@ namespace Arif.Scripts
                 
                 }
             }
-            
             
         }
     }

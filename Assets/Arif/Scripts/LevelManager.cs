@@ -20,7 +20,7 @@ namespace Arif.Scripts
 
         public PlayerController playerController;
         
-        [HideInInspector]public List<CollectableImage> collectedImageList = new List<CollectableImage>();
+        [HideInInspector]public List<CollectableSO> collectedProfileList = new List<CollectableSO>();
 
         public RectTransform bagContentTransform;
         public CollectableImage collectableImagePrefab;
@@ -131,13 +131,23 @@ namespace Arif.Scripts
                 }
             }
         }
-        
-        
+
+        public void RespawnObject(CollectableObject collectableObject)
+        {
+            foreach (var so in collectedProfileList)
+            {
+                if (so.myType == collectableObject.collectableProfile.myType)
+                {
+                    collectedProfileList.Remove(so);
+                    break;
+                }
+            }
+        }
        
         public void CollectObject(CollectableObject collectableObject)
         {
 
-            if (collectedImageList.Count>=maxItemCount)
+            if (collectedProfileList.Count>=maxItemCount)
             {
                 
                 Debug.Log("Doldu");
@@ -145,11 +155,10 @@ namespace Arif.Scripts
             }
             var cloneObject = Instantiate(collectableImagePrefab,bagContentTransform);
 
-            cloneObject.myImage.sprite = collectableObject.mySprite;
-            collectedImageList.Add(cloneObject);
-            cloneObject.myObject = Instantiate(collectableObject);
+            cloneObject.myImage.sprite = collectableObject.collectableProfile.myUISprite;
+            collectedProfileList.Add(collectableObject.collectableProfile);
+            cloneObject.myObject = collectableObject;
             cloneObject.myObject.gameObject.SetActive(false);
-            Destroy(collectableObject.gameObject);
         }
         
     }

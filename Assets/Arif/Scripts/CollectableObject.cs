@@ -6,7 +6,7 @@ namespace Arif.Scripts
     public class CollectableObject : MonoBehaviour
     {
 
-        public Sprite mySprite;
+        public CollectableSO collectableProfile;
         [HideInInspector]public bool canCollect;
         public MeshRenderer meshRenderer;
 
@@ -17,6 +17,16 @@ namespace Arif.Scripts
         }
 
 
+        public void MakeMeUI()
+        {
+            meshRenderer.gameObject.layer = 8;
+        }
+
+        public void MakeMeNormal()
+        {
+            meshRenderer.gameObject.layer = 0;
+        }
+        
         public void OnPlayerEnter()
         {
             canCollect = true;

@@ -1277,7 +1277,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentLevelState: 0
   playerController: {fileID: 1636804513}
-  collectedImageList: []
+  collectedProfileList: []
   bagContentTransform: {fileID: 1761528614}
   collectableImagePrefab: {fileID: 8279697705660805245, guid: d7b6e42c7c4814c42bd47342f39194f7,
     type: 3}
@@ -3370,6 +3370,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 712150020}
     m_Modifications:
+    - target: {fileID: 285076462, guid: 8fbd2300f4fcf90479852ef478d68dfe, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1768347149, guid: 8fbd2300f4fcf90479852ef478d68dfe, type: 3}
       propertyPath: m_Camera
       value: 
