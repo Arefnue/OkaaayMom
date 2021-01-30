@@ -68,8 +68,9 @@ namespace Arif.Scripts
                 }
             }
         }
-        
-        
+
+
+        private CollectableObject _selectedCollectableObjectFromUI;
 
         public void SelectObject()
         {
@@ -82,14 +83,18 @@ namespace Arif.Scripts
                 var ray2 = GameManager.Manager.overlayCam.ScreenPointToRay(Input.mousePosition);
                 if (Physics.Raycast(ray,out hit))
                 {
+                    if (_selectedCollectableObjectFromUI)
+                    {
+                        RespawnObject(_selectedCollectableObjectFromUI,hit.point);
+                        _selectedCollectableObjectFromUI.meshRenderer.material.color = Color.green;
+                        _selectedCollectableObjectFromUI = null;
+                    }
                     var collectableObject = hit.collider.GetComponent<CollectableObject>();
                     if (collectableObject)
                     {
                         if (collectableObject.canCollect)
                         {
-                           
                             CollectObject(collectableObject);
-                            
                         }
                     }
                 }
@@ -100,10 +105,20 @@ namespace Arif.Scripts
                     
                     if (collectableObject)
                     {
-                        RespawnObject(collectableObject,playerController.transform.position);
+                        SelectCollectableObjectFromUI(collectableObject);
                     }
                 }
             }
+        }
+        
+        public void SelectCollectableObjectFromUI(CollectableObject collectableObject)
+        {
+            if (_selectedCollectableObjectFromUI)
+            {
+                _selectedCollectableObjectFromUI.meshRenderer.material.color = Color.green;
+            }
+            _selectedCollectableObjectFromUI = collectableObject;
+            _selectedCollectableObjectFromUI.meshRenderer.material.color = Color.cyan;
         }
 
         public void RespawnObject(CollectableObject collectableObject,Vector3 pos)
