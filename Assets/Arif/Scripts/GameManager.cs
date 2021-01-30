@@ -7,6 +7,7 @@ namespace Arif.Scripts
         public static GameManager Manager;
 
         public Camera mainCam;
+        public Camera overlayCam;
 
         private void Awake()
         {
