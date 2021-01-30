@@ -111,7 +111,8 @@ namespace Arif.Scripts
 
             cloneObject.myImage.sprite = collectableObject.mySprite;
             collectedImageList.Add(cloneObject);
-            
+            cloneObject.myObject = Instantiate(collectableObject);
+            cloneObject.myObject.gameObject.SetActive(false);
             Destroy(collectableObject.gameObject);
         }
         

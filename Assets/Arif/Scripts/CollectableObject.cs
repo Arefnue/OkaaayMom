@@ -9,7 +9,14 @@ namespace Arif.Scripts
         public Sprite mySprite;
         [HideInInspector]public bool canCollect;
         public MeshRenderer meshRenderer;
-        
+
+        private void Start()
+        {
+            canCollect = false;
+            meshRenderer.material.color = Color.green;
+        }
+
+
         public void OnPlayerEnter()
         {
             canCollect = true;
