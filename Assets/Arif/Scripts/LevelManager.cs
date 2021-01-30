@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Arif.Scripts
@@ -17,6 +18,10 @@ namespace Arif.Scripts
         public LevelStates currentLevelState;
 
         public PlayerController playerController;
+        
+        [HideInInspector]public List<CollectableObject> collectedObjectsList = new List<CollectableObject>();
+
+        public Transform bagOfHoldingSpawnTransform;
 
         private void Awake()
         {
@@ -63,6 +68,8 @@ namespace Arif.Scripts
                 }
             }
         }
+        
+        
 
         public void SelectObject()
         {
@@ -77,10 +84,25 @@ namespace Arif.Scripts
                     var collectableObject = hit.collider.GetComponent<CollectableObject>();
                     if (collectableObject)
                     {
-                        playerController.playerAgent.SetDestination(hit.point);
+                        if (collectableObject.canCollect)
+                        {
+                           
+                            CollectObject(collectableObject);
+                            
+                        }
                     }
                 }
             }
+        }
+        
+        public void CollectObject(CollectableObject collectableObject)
+        {
+            var cloneObject = Instantiate(collectableObject, bagOfHoldingSpawnTransform);
+            cloneObject.transform.position = Vector3.zero;
+            cloneObject.transform.rotation = Quaternion.identity;
+            cloneObject.transform.localScale = Vector3.one;
+                            
+            Destroy(collectableObject.gameObject);
         }
         
     }
