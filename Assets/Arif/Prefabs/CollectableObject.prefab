@@ -138,7 +138,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64095c796e2284b4cab2d56ed22b3a51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mySprite: {fileID: 21300000, guid: 193d7c13824fd604b83ce586a7a5a6e0, type: 3}
+  collectableProfile: {fileID: 11400000, guid: 3ab936c4a04f64343a8c33d495621519, type: 2}
   canCollect: 0
   meshRenderer: {fileID: 2565441304931307525}
 --- !u!54 &2037999574631004029

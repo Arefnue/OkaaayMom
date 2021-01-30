@@ -12,6 +12,7 @@ namespace Arif.Scripts
         {
             Prepare,
             MainGame,
+            War,
             Finish
         }
 
@@ -19,7 +20,7 @@ namespace Arif.Scripts
 
         public PlayerController playerController;
         
-        [HideInInspector]public List<CollectableImage> collectedImageList = new List<CollectableImage>();
+        [HideInInspector]public List<CollectableSO> collectedProfileList = new List<CollectableSO>();
 
         public RectTransform bagContentTransform;
         public CollectableImage collectableImagePrefab;
@@ -49,8 +50,32 @@ namespace Arif.Scripts
                     break;
                 case LevelStates.Finish:
                     break;
+                case LevelStates.War:
+                    
+                   SelectAtWar();
+                    
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        public void SelectAtWar()
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                RaycastHit hit;
+                var ray = GameManager.Manager.overlayCam.ScreenPointToRay(Input.mousePosition);
+               
+                if (Physics.Raycast(ray,out hit))
+                {
+                   
+                    var collectableObject = hit.collider.GetComponent<CollectableObject>();
+                    if (collectableObject)
+                    {
+                        CollectObject(collectableObject);
+                    }
+                }
             }
         }
 
@@ -78,6 +103,7 @@ namespace Arif.Scripts
         {
             if (Input.GetMouseButtonDown(0))
             {
+
                 RaycastHit hit;
                 var ray = GameManager.Manager.mainCam.ScreenPointToRay(Input.mousePosition);
                
@@ -90,18 +116,38 @@ namespace Arif.Scripts
                         if (collectableObject.canCollect)
                         {
                             CollectObject(collectableObject);
+                            return;
+                        }
+                    }
+
+                    var interactiveObject = hit.collider.GetComponent<InteractiveObjects>();
+                    if (interactiveObject)
+                    {
+                        if (interactiveObject.canInteract)
+                        {
+                            interactiveObject.OnInteract();
                         }
                     }
                 }
-
             }
         }
-        
+
+        public void RespawnObject(CollectableObject collectableObject)
+        {
+            foreach (var so in collectedProfileList)
+            {
+                if (so.myType == collectableObject.collectableProfile.myType)
+                {
+                    collectedProfileList.Remove(so);
+                    break;
+                }
+            }
+        }
        
         public void CollectObject(CollectableObject collectableObject)
         {
 
-            if (collectedImageList.Count>=maxItemCount)
+            if (collectedProfileList.Count>=maxItemCount)
             {
                 
                 Debug.Log("Doldu");
@@ -109,11 +155,10 @@ namespace Arif.Scripts
             }
             var cloneObject = Instantiate(collectableImagePrefab,bagContentTransform);
 
-            cloneObject.myImage.sprite = collectableObject.mySprite;
-            collectedImageList.Add(cloneObject);
-            cloneObject.myObject = Instantiate(collectableObject);
+            cloneObject.myImage.sprite = collectableObject.collectableProfile.myUISprite;
+            collectedProfileList.Add(collectableObject.collectableProfile);
+            cloneObject.myObject = collectableObject;
             cloneObject.myObject.gameObject.SetActive(false);
-            Destroy(collectableObject.gameObject);
         }
         
     }

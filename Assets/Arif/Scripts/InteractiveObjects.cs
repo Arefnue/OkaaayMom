@@ -3,40 +3,35 @@ using UnityEngine;
 
 namespace Arif.Scripts
 {
-    public class CollectableObject : MonoBehaviour
+    public class InteractiveObjects : MonoBehaviour
     {
-
-        public CollectableSO collectableProfile;
-        [HideInInspector]public bool canCollect;
+        public GameObject myPanel;
         public MeshRenderer meshRenderer;
+        [HideInInspector]public bool canInteract;
 
-        private void Start()
+        public void OnInteract()
         {
-            canCollect = false;
-            meshRenderer.material.color = Color.green;
+            LevelManager.Manager.currentLevelState = LevelManager.LevelStates.War;
+            myPanel.SetActive(true);
+            
         }
 
-
-        public void MakeMeUI()
+        public void DisablePanel()
         {
-            meshRenderer.gameObject.layer = 8;
-        }
-
-        public void MakeMeNormal()
-        {
-            meshRenderer.gameObject.layer = 0;
+            LevelManager.Manager.currentLevelState = LevelManager.LevelStates.MainGame;
+            myPanel.SetActive(false);
         }
         
         public void OnPlayerEnter()
         {
-            canCollect = true;
+            canInteract = true;
             meshRenderer.material.color = Color.white;
         }
 
         public void OnPlayerExit()
         {
-            canCollect = false;
-            meshRenderer.material.color = Color.green;
+            canInteract = false;
+            meshRenderer.material.color = Color.blue;
         }
 
         private void OnTriggerEnter(Collider other)
@@ -56,7 +51,5 @@ namespace Arif.Scripts
                 OnPlayerExit();
             }
         }
-        
-        
     }
 }

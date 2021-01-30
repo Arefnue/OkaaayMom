@@ -26,23 +26,49 @@ namespace Arif.Scripts
 
         public void OnEndDrag(PointerEventData eventData)
         {
-            
-            RaycastHit hit;
-            var ray = GameManager.Manager.mainCam.ScreenPointToRay(Input.mousePosition);
-               
-            if (Physics.Raycast(ray,out hit))
+            if (LevelManager.Manager.currentLevelState == LevelManager.LevelStates.War)
             {
-                var cloneObject = Instantiate(myObject,LevelManager.Manager.transform);
-                cloneObject.transform.position = hit.point;
-                cloneObject.gameObject.SetActive(true);
-                Destroy(gameObject);
+                RaycastHit hit;
+                var ray = GameManager.Manager.overlayCam.ScreenPointToRay(Input.mousePosition);
+               
+                if (Physics.Raycast(ray,out hit))
+                {
+                    var cloneObject = Instantiate(myObject,hit.collider.GetComponent<Transform>().parent);
+                    cloneObject.transform.position = hit.point;
+                    cloneObject.gameObject.SetActive(true);
+                    cloneObject.MakeMeUI();
+                    LevelManager.Manager.RespawnObject(cloneObject);
+                    Destroy(gameObject);
+                }
+                else
+                {
+                    transform.SetParent(_myParent);
+                    transform.position = _lastPos;
+                
+                }
             }
             else
             {
-                transform.SetParent(_myParent);
-                transform.position = _lastPos;
+                RaycastHit hit;
+                var ray = GameManager.Manager.mainCam.ScreenPointToRay(Input.mousePosition);
+               
+                if (Physics.Raycast(ray,out hit))
+                {
+                    var cloneObject = Instantiate(myObject,LevelManager.Manager.transform);
+                    cloneObject.transform.position = hit.point;
+                    cloneObject.gameObject.SetActive(true);
+                    cloneObject.MakeMeNormal();
+                    LevelManager.Manager.RespawnObject(cloneObject);
+                    Destroy(gameObject);
+                }
+                else
+                {
+                    transform.SetParent(_myParent);
+                    transform.position = _lastPos;
                 
+                }
             }
+            
         }
     }
 }
