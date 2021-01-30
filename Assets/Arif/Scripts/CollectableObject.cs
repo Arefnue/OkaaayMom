@@ -1,39 +1,53 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Arif.Scripts
 {
     public class CollectableObject : MonoBehaviour
     {
-        public Transform movePos;
-        public bool useMovePos;
-        
-        public void OnClicked()
+
+        [HideInInspector]public bool canCollect;
+        public MeshRenderer meshRenderer;
+
+
+        public void MakeMeUI()
         {
-            if (useMovePos)
-            {
-                LevelManager.Manager.playerController.playerAgent.SetDestination(movePos.position);
-            }
-            else
-            {
-                LevelManager.Manager.playerController.playerAgent.SetDestination(transform.position);
-            }
-            
+            meshRenderer.gameObject.layer = 8;
+        }
+
+        public void MakeMeNormal()
+        {
+            meshRenderer.gameObject.layer = 0;
         }
         
-        public void OnCollected()
+        public void OnPlayerEnter()
         {
-            
+            canCollect = true;
+            meshRenderer.material.color = Color.white;
         }
 
-
-        public void OnReleased()
+        public void OnPlayerExit()
         {
-            
+            canCollect = false;
+            meshRenderer.material.color = Color.green;
         }
 
-        public void OnUsed()
+        private void OnTriggerEnter(Collider other)
         {
-            
+            var player = other.GetComponent<PlayerController>();
+            if (player)
+            {
+                OnPlayerEnter();
+            }
+        }
+        
+        private void OnTriggerExit(Collider other)
+        {
+            var player = other.GetComponent<PlayerController>();
+            if (player)
+            {
+                OnPlayerExit();
+            }
         }
         
         

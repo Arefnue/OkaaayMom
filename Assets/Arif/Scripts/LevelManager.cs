@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Arif.Scripts
@@ -17,6 +18,10 @@ namespace Arif.Scripts
         public LevelStates currentLevelState;
 
         public PlayerController playerController;
+        
+        [HideInInspector]public List<CollectableObject> collectedObjectsList = new List<CollectableObject>();
+
+        public Transform bagOfHoldingSpawnTransform;
 
         private void Awake()
         {
@@ -63,24 +68,68 @@ namespace Arif.Scripts
                 }
             }
         }
+        
+        
 
         public void SelectObject()
         {
             if (Input.GetMouseButtonDown(0))
             {
                 RaycastHit hit;
+                RaycastHit hit2;
 
                 var ray = GameManager.Manager.mainCam.ScreenPointToRay(Input.mousePosition);
-                
+                var ray2 = GameManager.Manager.overlayCam.ScreenPointToRay(Input.mousePosition);
                 if (Physics.Raycast(ray,out hit))
                 {
                     var collectableObject = hit.collider.GetComponent<CollectableObject>();
                     if (collectableObject)
                     {
-                        playerController.playerAgent.SetDestination(hit.point);
+                        if (collectableObject.canCollect)
+                        {
+                           
+                            CollectObject(collectableObject);
+                            
+                        }
+                    }
+                }
+
+                if (Physics.Raycast(ray2,out hit2))
+                {
+                    var collectableObject = hit2.collider.GetComponent<CollectableObject>();
+                    
+                    if (collectableObject)
+                    {
+                        RespawnObject(collectableObject,playerController.transform.position);
                     }
                 }
             }
+        }
+
+        public void RespawnObject(CollectableObject collectableObject,Vector3 pos)
+        {
+            var cloneObject = Instantiate(collectableObject);
+            cloneObject.transform.SetParent(transform);
+            cloneObject.transform.position = pos;
+            cloneObject.transform.localRotation = Quaternion.identity;
+            cloneObject.transform.localScale = Vector3.one;
+            
+            cloneObject.MakeMeNormal();
+            
+            Destroy(collectableObject.gameObject);
+        }
+        
+        public void CollectObject(CollectableObject collectableObject)
+        {
+            var cloneObject = Instantiate(collectableObject);
+            cloneObject.transform.SetParent(bagOfHoldingSpawnTransform);
+            cloneObject.transform.localPosition = Vector3.zero;
+            cloneObject.transform.localRotation = Quaternion.identity;
+            cloneObject.transform.localScale = Vector3.one;
+            
+            cloneObject.MakeMeUI();
+            
+            Destroy(collectableObject.gameObject);
         }
         
     }

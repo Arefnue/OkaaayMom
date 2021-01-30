@@ -7,5 +7,7 @@ namespace Arif.Scripts
     {
         public Transform modelRoot;
         public NavMeshAgent playerAgent;
+        public Collider hardCollider;
+        public Collider triggerCollider;
     }
 }
