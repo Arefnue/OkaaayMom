@@ -26,23 +26,32 @@ namespace Arif.Scripts
 
         public void OnEndDrag(PointerEventData eventData)
         {
-            
-            RaycastHit hit;
-            var ray = GameManager.Manager.mainCam.ScreenPointToRay(Input.mousePosition);
-               
-            if (Physics.Raycast(ray,out hit))
-            {
-                var cloneObject = Instantiate(myObject,LevelManager.Manager.transform);
-                cloneObject.transform.position = hit.point;
-                cloneObject.gameObject.SetActive(true);
-                Destroy(gameObject);
-            }
-            else
+            if (LevelManager.Manager.currentLevelState == LevelManager.LevelStates.War)
             {
                 transform.SetParent(_myParent);
                 transform.position = _lastPos;
-                
             }
+            else
+            {
+                RaycastHit hit;
+                var ray = GameManager.Manager.mainCam.ScreenPointToRay(Input.mousePosition);
+               
+                if (Physics.Raycast(ray,out hit))
+                {
+                    var cloneObject = Instantiate(myObject,LevelManager.Manager.transform);
+                    cloneObject.transform.position = hit.point;
+                    cloneObject.gameObject.SetActive(true);
+                    Destroy(gameObject);
+                }
+                else
+                {
+                    transform.SetParent(_myParent);
+                    transform.position = _lastPos;
+                
+                }
+            }
+            
+            
         }
     }
 }

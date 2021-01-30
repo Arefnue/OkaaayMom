@@ -12,6 +12,7 @@ namespace Arif.Scripts
         {
             Prepare,
             MainGame,
+            War,
             Finish
         }
 
@@ -49,8 +50,32 @@ namespace Arif.Scripts
                     break;
                 case LevelStates.Finish:
                     break;
+                case LevelStates.War:
+                    
+                   SelectAtWar();
+                    
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        public void SelectAtWar()
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                RaycastHit hit;
+                var ray = GameManager.Manager.overlayCam.ScreenPointToRay(Input.mousePosition);
+               
+                if (Physics.Raycast(ray,out hit))
+                {
+                   
+                    var collectableObject = hit.collider.GetComponent<CollectableObject>();
+                    if (collectableObject)
+                    {
+                        CollectObject(collectableObject);
+                    }
+                }
             }
         }
 
@@ -78,6 +103,7 @@ namespace Arif.Scripts
         {
             if (Input.GetMouseButtonDown(0))
             {
+
                 RaycastHit hit;
                 var ray = GameManager.Manager.mainCam.ScreenPointToRay(Input.mousePosition);
                
@@ -90,12 +116,22 @@ namespace Arif.Scripts
                         if (collectableObject.canCollect)
                         {
                             CollectObject(collectableObject);
+                            return;
+                        }
+                    }
+
+                    var interactiveObject = hit.collider.GetComponent<InteractiveObjects>();
+                    if (interactiveObject)
+                    {
+                        if (interactiveObject.canInteract)
+                        {
+                            interactiveObject.OnInteract();
                         }
                     }
                 }
-
             }
         }
+        
         
        
         public void CollectObject(CollectableObject collectableObject)
