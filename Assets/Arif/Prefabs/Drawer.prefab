@@ -382,7 +382,7 @@ GameObject:
   m_Component:
   - component: {fileID: 411490054770202852}
   m_Layer: 0
-  m_Name: Bed
+  m_Name: Drawer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
