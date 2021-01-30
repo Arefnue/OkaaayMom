@@ -9,10 +9,14 @@ namespace Arif.Scripts
         public Image myImage;
         [HideInInspector]public CollectableObject myObject;
 
+        private Transform _myParent;
+
         private Vector2 _lastPos;
         public void OnBeginDrag(PointerEventData eventData)
         {
             _lastPos = transform.position;
+            _myParent = transform.parent;
+            transform.SetParent(LevelManager.Manager.mainCanvas.transform);
         }
 
         public void OnDrag(PointerEventData eventData)
@@ -35,7 +39,9 @@ namespace Arif.Scripts
             }
             else
             {
+                transform.SetParent(_myParent);
                 transform.position = _lastPos;
+                
             }
         }
     }

@@ -1245,6 +1245,7 @@ MonoBehaviour:
   collectableImagePrefab: {fileID: 8279697705660805245, guid: d7b6e42c7c4814c42bd47342f39194f7,
     type: 3}
   maxItemCount: 10
+  mainCanvas: {fileID: 291186353}
 --- !u!4 &1096714254 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 411490054770202852, guid: 305f99aafff0c004e92f3af10464f42b,

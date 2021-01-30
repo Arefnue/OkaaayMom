@@ -25,7 +25,7 @@ namespace Arif.Scripts
         public CollectableImage collectableImagePrefab;
 
         public int maxItemCount=10;
-        
+        public Canvas mainCanvas;
         
         private void Awake()
         {
