@@ -4,16 +4,27 @@ namespace Arif.Scripts
 {
     public class CollectableObject : MonoBehaviour
     {
-        // Start is called before the first frame update
-        void Start()
+        public void OnClicked()
         {
+            
+        }
         
+        public void OnCollected()
+        {
+            
         }
 
-        // Update is called once per frame
-        void Update()
+
+        public void OnReleased()
         {
-        
+            
         }
+
+        public void OnUsed()
+        {
+            
+        }
+        
+        
     }
 }
