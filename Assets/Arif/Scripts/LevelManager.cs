@@ -52,7 +52,9 @@ namespace Arif.Scripts
         public float credibilityIncreaseValue;
         public float credibilityDecreaseValue;
         public float motherDecreaseValue;
-
+        [Header("UIManager")] public Texture2D[] MomImgs;
+        public Image MomImage;
+        
         public float credibilityPoint
         {
             get
