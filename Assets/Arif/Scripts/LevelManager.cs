@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 namespace Arif.Scripts
@@ -34,6 +35,15 @@ namespace Arif.Scripts
         public Transform orderListTransform;
         [HideInInspector]public List<CollectableSO> orderedCollectableList = new List<CollectableSO>();
         public OrderedImage orderedImagePrefab;
+        [HideInInspector]public int rightOrderCount;
+
+        public float maxDayTime=60f;
+
+        public Text timerText;
+
+        [HideInInspector] public float credibilityPoint;
+        [HideInInspector] public float motherPoint;
+        [HideInInspector] public float dayTimer;
         
         private void Awake()
         {
@@ -72,8 +82,24 @@ namespace Arif.Scripts
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+
+            dayTimer += Time.deltaTime;
+
+            timerText.text = (maxDayTime - dayTimer).ToString(".0");
+            if (dayTimer>= maxDayTime)
+            {
+                FinishLevel();
+                currentLevelState = LevelStates.Finish;
+            }
+
         }
 
+
+        public void FinishLevel()
+        {
+            
+        }
+        
         public void SelectAtWar()
         {
             if (Input.GetMouseButtonDown(0))
@@ -175,6 +201,8 @@ namespace Arif.Scripts
             cloneObject.myObject.gameObject.SetActive(false);
         }
         
+        [HideInInspector]public List<OrderedImage> orderedImageList = new List<OrderedImage>();
+        
         public void DetermineOrder()
         {
             for (int i = 0; i < orderCount; i++)
@@ -183,8 +211,10 @@ namespace Arif.Scripts
                 orderedCollectableList.Add(allCollectableProfilesList[randomIndex]);
                 var cloneOrder = Instantiate(orderedImagePrefab,orderListTransform);
                 cloneOrder.myImage.sprite = allCollectableProfilesList[randomIndex].myUISprite;
+                cloneOrder.myProfile = allCollectableProfilesList[randomIndex];
+                orderedImageList.Add(cloneOrder);
             }
         }
-
+        
     }
 }

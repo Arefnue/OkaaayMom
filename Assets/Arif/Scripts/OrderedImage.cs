@@ -7,5 +7,6 @@ namespace Arif.Scripts
     {
         public Image myImage;
         [HideInInspector] public bool isFound;
+        [HideInInspector] public CollectableSO myProfile;
     }
 }
