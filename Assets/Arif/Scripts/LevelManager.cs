@@ -126,10 +126,7 @@ namespace Arif.Scripts
                 _motherPoint = Mathf.Clamp(_motherPoint, 0, 1f);
                 mamaSlider.value = _motherPoint;
                 
-
                 
-                
-
                 if (motherPoint>= 0.8f)
                 {
                     MomImage.sprite = MomImgs[2];
