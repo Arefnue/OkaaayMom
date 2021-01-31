@@ -38,6 +38,12 @@ namespace Arif.Scripts
                     cloneObject.gameObject.SetActive(true);
                     cloneObject.MakeMeUI();
                     LevelManager.Manager.RespawnObject(cloneObject);
+                    
+                    if (!CollectableController.instance.ControlDistance(cloneObject.collectableProfile.myType,cloneObject.transform.position))
+                    {
+                        LevelManager.Manager.motherPoint++;
+                    }
+                    
                     Destroy(gameObject);
                 }
                 else
@@ -59,6 +65,11 @@ namespace Arif.Scripts
                     cloneObject.gameObject.SetActive(true);
                     cloneObject.MakeMeNormal();
                     LevelManager.Manager.RespawnObject(cloneObject);
+                    
+                    if (!CollectableController.instance.ControlDistance(cloneObject.collectableProfile.myType,cloneObject.transform.position))
+                    {
+                        LevelManager.Manager.motherPoint++;
+                    }
                     Destroy(gameObject);
                 }
                 else

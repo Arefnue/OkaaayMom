@@ -18,18 +18,21 @@ namespace Arif.Scripts
             Finish
         }
 
-        public LevelStates currentLevelState;
-
+        [Header("Core")]
+        [HideInInspector]public LevelStates currentLevelState;
         public PlayerController playerController;
         
         [HideInInspector]public List<CollectableSO> collectedProfileList = new List<CollectableSO>();
 
+        [Header("Bag")]
         public RectTransform bagContentTransform;
         public CollectableImage collectableImagePrefab;
-
         public int maxItemCount=10;
+        
+        [Header("UI")]
         public Canvas mainCanvas;
 
+        [Header("Order")]
         public List<CollectableSO> allCollectableProfilesList;
         public int orderCount;
         public Transform orderListTransform;
@@ -40,6 +43,10 @@ namespace Arif.Scripts
         public float maxDayTime=60f;
 
         public Text timerText;
+
+             
+        [HideInInspector]public List<OrderedImage> orderedImageList = new List<OrderedImage>();
+        
 
         [HideInInspector] public float credibilityPoint;
         [HideInInspector] public float motherPoint;
@@ -97,7 +104,7 @@ namespace Arif.Scripts
 
         public void FinishLevel()
         {
-            
+            CheckRightness();
         }
         
         public void SelectAtWar()
@@ -200,8 +207,7 @@ namespace Arif.Scripts
             cloneObject.myObject = collectableObject;
             cloneObject.myObject.gameObject.SetActive(false);
         }
-        
-        [HideInInspector]public List<OrderedImage> orderedImageList = new List<OrderedImage>();
+   
         
         public void DetermineOrder()
         {
@@ -209,12 +215,34 @@ namespace Arif.Scripts
             {
                 var randomIndex = Random.Range(0, allCollectableProfilesList.Count);
                 orderedCollectableList.Add(allCollectableProfilesList[randomIndex]);
+                
                 var cloneOrder = Instantiate(orderedImagePrefab,orderListTransform);
                 cloneOrder.myImage.sprite = allCollectableProfilesList[randomIndex].myUISprite;
                 cloneOrder.myProfile = allCollectableProfilesList[randomIndex];
+                
                 orderedImageList.Add(cloneOrder);
             }
         }
-        
+
+        public void CheckRightness()
+        {
+            foreach (var so in collectedProfileList)
+            {
+                if (orderedCollectableList.Contains(so))
+                {
+                    orderedCollectableList.Remove(so);
+                    rightOrderCount++;
+                }
+            }
+
+            if (rightOrderCount>=orderedCollectableList.Count)
+            {
+                Debug.Log("Win");
+            }
+            else
+            {
+                Debug.Log("Lose");
+            }
+        }
     }
 }
