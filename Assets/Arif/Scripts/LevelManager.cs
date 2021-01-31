@@ -51,9 +51,54 @@ namespace Arif.Scripts
         public float credibilityDecreaseValue;
         public float motherDecreaseValue;
 
-        [HideInInspector] public float credibilityPoint;
-        [HideInInspector] public float motherPoint;
-        [HideInInspector] public float dayTimer;
+        public float credibilityPoint
+        {
+            get
+            {
+                return _credibilityPoint;
+            }
+            set
+            {
+                _credibilityPoint = value;
+                _credibilityPoint = Mathf.Clamp(_credibilityPoint, 0, 1f);
+
+                //todo bitir
+                if (_credibilityPoint>=1f)
+                {
+                    
+                }
+                else if (_credibilityPoint<=0f)
+                {
+                    
+                }
+            }
+        }
+
+        private float _credibilityPoint = 0.5f;
+
+        public float motherPoint
+        {
+            get
+            {
+                return _motherPoint;
+            }
+            set
+            {
+                _motherPoint = value;
+                _motherPoint = Mathf.Clamp(_motherPoint, 0, 1f);
+              
+                //todo UI ekle
+                if (_motherPoint>=1f)
+                {
+                    //todo oyunu bitir
+                }
+
+            }
+        }
+
+        private float _motherPoint = 1f;
+
+        [HideInInspector]public float dayTimer;
 
         private Vector3 _playerStartPos;
 
@@ -96,42 +141,50 @@ namespace Arif.Scripts
                     throw new ArgumentOutOfRangeException();
             }
 
-            dayTimer += Time.deltaTime;
 
-            timerText.text = (maxDayTime - dayTimer).ToString(".0");
-            if (dayTimer>= maxDayTime)
+            if (currentLevelState != LevelStates.Finish && currentLevelState != LevelStates.Prepare)
             {
-                FinishLevel();
-                currentLevelState = LevelStates.Finish;
+                dayTimer += Time.deltaTime;
+
+                timerText.text = (maxDayTime - dayTimer).ToString(".0");
+                if (dayTimer>= maxDayTime)
+                {
+                    currentLevelState = LevelStates.Finish;
+                    FinishLevel();
+                
+                }
             }
+            
 
         }
 
-
+        public void SkipDay()
+        {
+            FinishLevel();
+        }
+        
+        
         public void FinishLevel()
         {
-            ResetLevel();
+            
             CheckRightness();
+            ResetLevel();
         }
 
         public void ResetLevel()
         {
             dayTimer = 0;
             playerController.transform.position = _playerStartPos;
+            playerController.playerAgent.SetDestination(_playerStartPos);
+            var orderedChildren = orderListTransform.GetComponentsInChildren<OrderedImage>();
             
-            collectedProfileList?.Clear();
-            foreach (var VARIABLE in orderedImageList)
+            foreach (var VARIABLE in orderedChildren)
             {
                 Destroy(VARIABLE.gameObject);
             }
             orderedImageList?.Clear();
             orderedCollectableList?.Clear();
-
-            foreach (var VARIABLE in _collectableImageList)
-            {
-                Destroy(VARIABLE.gameObject);
-            }
-            _collectableImageList?.Clear();
+            
             StartGame();
         }
         
@@ -260,7 +313,6 @@ namespace Arif.Scripts
             {
                 if (orderedCollectableList.Contains(so))
                 {
-                    orderedCollectableList.Remove(so);
                     rightOrderCount++;
                 }
             }

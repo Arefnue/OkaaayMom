@@ -68,7 +68,7 @@ namespace Arif.Scripts
                     
                     if (!CollectableController.instance.ControlDistance(cloneObject.collectableProfile.myType,cloneObject.transform.position))
                     {
-                        LevelManager.Manager.motherPoint++;
+                        LevelManager.Manager.motherPoint -= LevelManager.Manager.motherDecreaseValue;
                     }
                     Destroy(gameObject);
                 }
