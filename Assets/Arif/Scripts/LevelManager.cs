@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Arif.Scripts
 {
@@ -27,6 +28,12 @@ namespace Arif.Scripts
 
         public int maxItemCount=10;
         public Canvas mainCanvas;
+
+        public List<CollectableSO> allCollectableProfilesList;
+        public int orderCount;
+        public Transform orderListTransform;
+        [HideInInspector]public List<CollectableSO> orderedCollectableList = new List<CollectableSO>();
+        public OrderedImage orderedImagePrefab;
         
         private void Awake()
         {
@@ -35,9 +42,16 @@ namespace Arif.Scripts
 
         private void Start()
         {
-            currentLevelState = LevelStates.MainGame;
+           StartGame();
         }
 
+
+        public void StartGame()
+        {
+            currentLevelState = LevelStates.MainGame;
+            DetermineOrder();
+        }
+        
         private void Update()
         {
             switch (currentLevelState)
@@ -161,5 +175,16 @@ namespace Arif.Scripts
             cloneObject.myObject.gameObject.SetActive(false);
         }
         
+        public void DetermineOrder()
+        {
+            for (int i = 0; i < orderCount; i++)
+            {
+                var randomIndex = Random.Range(0, allCollectableProfilesList.Count);
+                orderedCollectableList.Add(allCollectableProfilesList[randomIndex]);
+                var cloneOrder = Instantiate(orderedImagePrefab,orderListTransform);
+                cloneOrder.myImage.sprite = allCollectableProfilesList[randomIndex].myUISprite;
+            }
+        }
+
     }
 }
