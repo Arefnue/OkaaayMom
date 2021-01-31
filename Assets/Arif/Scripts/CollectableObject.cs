@@ -9,9 +9,10 @@ namespace Arif.Scripts
         public CollectableSO collectableProfile;
         [HideInInspector]public bool canCollect;
         public MeshRenderer meshRenderer;
-
+        public Rigidbody rb;
         private void Start()
         {
+            rb = GetComponent<Rigidbody>();
             canCollect = false;
             if (meshRenderer)
             {

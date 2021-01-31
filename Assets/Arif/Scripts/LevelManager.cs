@@ -116,6 +116,7 @@ namespace Arif.Scripts
                 _motherPoint = value;
                 _motherPoint = Mathf.Clamp(_motherPoint, 0, 1f);
                 mamaSlider.value = _motherPoint;
+                
                 //todo UI ekle
                 if (_motherPoint>=1f)
                 {
@@ -408,6 +409,8 @@ namespace Arif.Scripts
                 Debug.Log("Doldu");
                 return;
             }
+
+            collectableObject.rb.isKinematic = false;
             var cloneObject = Instantiate(collectableImagePrefab,bagContentTransform);
             _collectableImageList.Add(cloneObject);
             cloneObject.myImage.sprite = collectableObject.collectableProfile.myUISprite;
