@@ -8,4 +8,7 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/Scenes/ArifTestScene.unity
+    guid: 0878d76ff466fae458d2e6e4ffe946ef
   m_configObjects: {}

@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -61,19 +63,46 @@ namespace Arif.Scripts
             {
                 _credibilityPoint = value;
                 _credibilityPoint = Mathf.Clamp(_credibilityPoint, 0, 1f);
-
+                crediSlider.value = _credibilityPoint;
                 //todo bitir
                 if (_credibilityPoint>=1f)
                 {
                     playerController.playerAnimator.SetTrigger("Spiderman");
+                    currentLevelState = LevelStates.Finish;
+                    
+                    Win();
                 }
                 else if (_credibilityPoint<=0f)
                 {
                     playerController.playerAnimator.SetTrigger("Spiderman");
+                    currentLevelState = LevelStates.Finish;
+                    Lose();
                 }
             }
         }
 
+        private void Lose()
+        {
+            StartCoroutine(nameof(DelayLose));
+        }
+
+        private IEnumerator DelayLose()
+        {
+            yield return new WaitForSeconds(3f);
+            losePanel.SetActive(true);
+        }
+
+        private void Win()
+        {
+            StartCoroutine(DelayWin());
+        }
+
+        private IEnumerator DelayWin()
+        {
+            yield return new WaitForSeconds(3f);
+            winPanel.SetActive(true);
+        }
+        
         private float _credibilityPoint = 0.5f;
 
         public float motherPoint
@@ -86,15 +115,22 @@ namespace Arif.Scripts
             {
                 _motherPoint = value;
                 _motherPoint = Mathf.Clamp(_motherPoint, 0, 1f);
-              
+                mamaSlider.value = _motherPoint;
                 //todo UI ekle
                 if (_motherPoint>=1f)
                 {
                     MamaAttack();
                     currentLevelState = LevelStates.Finish;
+                    Lose();
                 }
 
             }
+        }
+
+        public void Retry()
+        {
+            Scene scene = SceneManager.GetActiveScene();
+            SceneManager.LoadScene(scene.name);
         }
 
         private float _motherPoint = 0f;
@@ -107,7 +143,13 @@ namespace Arif.Scripts
         private Vector3 _playerStartPos;
 
         public List<MamaAttack> mamaList;
-        
+
+        public Slider mamaSlider;
+        public Slider crediSlider;
+
+        public GameObject winPanel;
+        public GameObject losePanel;
+        public GameObject dayPanel;
 
         private void Awake()
         {
@@ -173,9 +215,12 @@ namespace Arif.Scripts
                 if (dayTimer>= maxDayTime)
                 {
                     currentLevelState = LevelStates.Finish;
-                    FinishLevel();
+                    ShowDayPanel();
                 
                 }
+
+                
+               
             }
             
 
@@ -204,6 +249,11 @@ namespace Arif.Scripts
         {
             FinishLevel();
         }
+
+        public void ShowDayPanel()
+        {
+            dayPanel.SetActive(true);
+        }
         
         
         public void FinishLevel()
@@ -226,6 +276,10 @@ namespace Arif.Scripts
             }
             orderedImageList?.Clear();
             orderedCollectableList?.Clear();
+            
+            dayPanel.SetActive(false);
+            losePanel.SetActive(false);
+            winPanel.SetActive(false);
             
             StartGame();
         }
