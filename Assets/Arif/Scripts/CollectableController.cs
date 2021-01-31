@@ -9,7 +9,7 @@ namespace Arif.Scripts
         public static CollectableController instance;
         public class CollectablePosition
         {
-            public CollectableSO.CollectableType MyType = CollectableSO.CollectableType.Book;
+            public CollectableSO.CollectableType MyType = CollectableSO.CollectableType.Anahtar;
             public Vector3 MyPos = Vector3.zero;
             public float Radius = 2f;
         }
