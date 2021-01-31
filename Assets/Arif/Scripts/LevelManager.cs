@@ -198,7 +198,7 @@ namespace Arif.Scripts
         {
             dayTimer = 0;
             playerController.transform.position = _playerStartPos;
-            //playerController.playerAgent.SetDestination(_playerStartPos);
+            playerController.playerAgent.SetDestination(_playerStartPos);
             var orderedChildren = orderListTransform.GetComponentsInChildren<OrderedImage>();
             
             foreach (var VARIABLE in orderedChildren)
@@ -245,8 +245,22 @@ namespace Arif.Scripts
 
         }
 
+        /*private void FixedUpdate()
+        {
+            Vector3 movedir = Vector3.zero;
+            movedir.x = Input.GetAxis("Horizontal");
+            movedir.z = Input.GetAxis("Vertical");
+            playerController.myRb.velocity = movedir*5;
+            playerController.myRb.angularVelocity =new Vector3(0,playerController.myRb.angularVelocity.y,0); 
+
+
+        }*/
+
         public void MovePlayer()
         {
+
+             
+            
             if (Input.GetMouseButtonDown(1))
             {
                 RaycastHit hit;
