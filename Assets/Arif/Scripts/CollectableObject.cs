@@ -10,15 +10,18 @@ namespace Arif.Scripts
         [HideInInspector]public bool canCollect;
         public MeshRenderer meshRenderer;
         public Rigidbody rb;
+
+        private Color _initalColor=new Color();
         private void Start()
         {
             rb = GetComponent<Rigidbody>();
             canCollect = false;
             if (meshRenderer)
             {
-                meshRenderer.material.color = Color.green;
+                _initalColor = meshRenderer.material.color;
             }
-            
+           
+
         }
 
 
@@ -47,7 +50,8 @@ namespace Arif.Scripts
             canCollect = true;
             if (meshRenderer)
             {
-                meshRenderer.material.color = Color.white;
+                meshRenderer.material.color = Color.cyan;
+                
             }
             
         }
@@ -57,7 +61,8 @@ namespace Arif.Scripts
             canCollect = false;
             if (meshRenderer)
             {
-                meshRenderer.material.color = Color.green;
+                meshRenderer.material.color = _initalColor;
+                
             }
             
         }

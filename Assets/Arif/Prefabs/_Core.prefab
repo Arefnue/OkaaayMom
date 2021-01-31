@@ -2808,13 +2808,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: cf977c2a11302a4498024b9b9c1193bd, type: 2}
   - {fileID: 11400000, guid: 0a45b239b7fd1d4438d95daf3c1d582a, type: 2}
   - {fileID: 11400000, guid: 90b1e674771ed4848b9d62caf4ea5599, type: 2}
-  orderCount: 5
+  orderCount: 3
   orderListTransform: {fileID: 7961985246295360598}
   orderedCollectableList: []
   orderedImagePrefab: {fileID: 4482616898874933839, guid: 3c2126b6041be544a83b1b7f441fed92,
     type: 3}
   rightOrderCount: 0
-  maxDayTime: 10
+  maxDayTime: 25
   timerText: {fileID: 7961985245871135030}
   orderedImageList: []
   credibilityIncreaseValue: 0.2

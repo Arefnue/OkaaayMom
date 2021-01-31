@@ -66,7 +66,6 @@ namespace Arif.Scripts
                 _credibilityPoint = value;
                 _credibilityPoint = Mathf.Clamp(_credibilityPoint, 0, 1f);
                 crediSlider.value = _credibilityPoint;
-                //todo bitir
                 if (_credibilityPoint>=1f)
                 {
                     playerController.playerAnimator.SetTrigger("Spiderman");
@@ -175,6 +174,7 @@ namespace Arif.Scripts
 
         public void MamaAttack()
         {
+            playerController.playerAnimator.SetTrigger("Spiderman");
             foreach (var VARIABLE in mamaList)
             {
                 VARIABLE.gameObject.SetActive(true);
@@ -221,12 +221,9 @@ namespace Arif.Scripts
                     ShowDayPanel();
                 
                 }
-
                 
-               
             }
             
-
         }
         
 
@@ -255,6 +252,7 @@ namespace Arif.Scripts
 
         public void ShowDayPanel()
         {
+            CheckRightness();
             dayPanel.SetActive(true);
         }
         
@@ -352,6 +350,8 @@ namespace Arif.Scripts
                     }
                 }
             }
+            
+            playerController.playerAnimator.SetFloat("Blend",playerController.playerAgent.velocity.magnitude);
         }
         
 
@@ -449,11 +449,11 @@ namespace Arif.Scripts
 
             if (rightOrderCount>=orderedCollectableList.Count)
             {
-                credibilityPoint += credibilityIncreaseValue;
+                credibilityPoint += rightOrderCount*credibilityIncreaseValue;
             }
             else
             {
-                credibilityPoint -= credibilityDecreaseValue;
+                credibilityPoint -= credibilityDecreaseValue/rightOrderCount;
             }
         }
     }
