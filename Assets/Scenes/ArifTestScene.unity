@@ -4561,6 +4561,27 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 201755737, guid: 832cbdcc098a5c3499a0b2fcff543d08, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 50.920776
+      objectReference: {fileID: 0}
+    - target: {fileID: 201755737, guid: 832cbdcc098a5c3499a0b2fcff543d08, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 18.467712
+      objectReference: {fileID: 0}
+    - target: {fileID: 201755737, guid: 832cbdcc098a5c3499a0b2fcff543d08, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 6.23
+      objectReference: {fileID: 0}
+    - target: {fileID: 201755737, guid: 832cbdcc098a5c3499a0b2fcff543d08, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.0000019073486
+      objectReference: {fileID: 0}
+    - target: {fileID: 201755738, guid: 832cbdcc098a5c3499a0b2fcff543d08, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 16a7e715513fd954cb10092eb1fb1a25,
+        type: 3}
     - target: {fileID: 766565378, guid: 832cbdcc098a5c3499a0b2fcff543d08, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -4576,6 +4597,22 @@ PrefabInstance:
     - target: {fileID: 1178849335, guid: 832cbdcc098a5c3499a0b2fcff543d08, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1226979452, guid: 832cbdcc098a5c3499a0b2fcff543d08, type: 3}
+      propertyPath: m_Colors.m_DisabledColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1226979452, guid: 832cbdcc098a5c3499a0b2fcff543d08, type: 3}
+      propertyPath: m_Colors.m_DisabledColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1226979452, guid: 832cbdcc098a5c3499a0b2fcff543d08, type: 3}
+      propertyPath: m_Colors.m_DisabledColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1226979452, guid: 832cbdcc098a5c3499a0b2fcff543d08, type: 3}
+      propertyPath: m_Colors.m_DisabledColor.r
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7961985245657082154, guid: 832cbdcc098a5c3499a0b2fcff543d08,
         type: 3}
@@ -4637,6 +4674,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7961985245783314044, guid: 832cbdcc098a5c3499a0b2fcff543d08,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7961985246177146605, guid: 832cbdcc098a5c3499a0b2fcff543d08,
         type: 3}
       propertyPath: mamaList.Array.data[0]
@@ -4687,6 +4729,11 @@ PrefabInstance:
       propertyPath: mamaList.Array.data[9]
       value: 
       objectReference: {fileID: 2077789571}
+    - target: {fileID: 7961985246295360598, guid: 832cbdcc098a5c3499a0b2fcff543d08,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 832cbdcc098a5c3499a0b2fcff543d08, type: 3}
 --- !u!4 &666695532 stripped

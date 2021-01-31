@@ -89,7 +89,7 @@ namespace Arif.Scripts
 
         private IEnumerator DelayLose()
         {
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(2.5f);
             losePanel.SetActive(true);
         }
 
@@ -401,14 +401,18 @@ namespace Arif.Scripts
         }
         
         private List<CollectableImage> _collectableImageList = new List<CollectableImage>();
+
+        // private IEnumerator ShakeObject()
+        // {
+        //     yield return new WaitForSeconds();
+        // }
        
         public void CollectObject(CollectableObject collectableObject)
         {
 
             if (collectedProfileList.Count>=maxItemCount)
             {
-                
-                Debug.Log("Doldu");
+                //collectableObject.meshRenderer
                 return;
             }
 
