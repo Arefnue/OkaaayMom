@@ -23,18 +23,20 @@ namespace Arif.Scripts
 
         public void MakeMeUI()
         {
-            if (meshRenderer)
+          
+            var children = gameObject.GetComponentsInChildren<Transform>();
+            foreach (var VARIABLE in children)
             {
-                meshRenderer.gameObject.layer = 8;
+                VARIABLE.gameObject.layer = 8;
             }
-           
         }
 
         public void MakeMeNormal()
         {
-            if (meshRenderer)
+            var children = gameObject.GetComponentsInChildren<Transform>();
+            foreach (var VARIABLE in children)
             {
-                meshRenderer.gameObject.layer = 0;
+                VARIABLE.gameObject.layer = 0;
             }
            
         }
