@@ -52,7 +52,7 @@ namespace Arif.Scripts
         public float credibilityIncreaseValue;
         public float credibilityDecreaseValue;
         public float motherDecreaseValue;
-        [Header("UIManager")] public Texture2D[] MomImgs;
+        [Header("UIManager")] public Sprite[] MomImgs;
         public Image MomImage;
         
         public float credibilityPoint
@@ -126,7 +126,24 @@ namespace Arif.Scripts
                 _motherPoint = Mathf.Clamp(_motherPoint, 0, 1f);
                 mamaSlider.value = _motherPoint;
                 
-                //todo UI ekle
+
+                
+                
+
+                if (motherPoint>= 0.8f)
+                {
+                    MomImage.sprite = MomImgs[2];
+                }
+                else if (motherPoint >= 0.4f)
+                {
+                    MomImage.sprite = MomImgs[1];
+                }
+                else
+                {
+                    MomImage.sprite = MomImgs[0];
+                }
+                
+                
                 if (_motherPoint>=1f)
                 {
                     MamaAttack();
