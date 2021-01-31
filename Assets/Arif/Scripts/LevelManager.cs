@@ -65,11 +65,11 @@ namespace Arif.Scripts
                 //todo bitir
                 if (_credibilityPoint>=1f)
                 {
-                    
+                    playerController.playerAnimator.SetTrigger("Spiderman");
                 }
                 else if (_credibilityPoint<=0f)
                 {
-                    
+                    playerController.playerAnimator.SetTrigger("Spiderman");
                 }
             }
         }
@@ -90,7 +90,7 @@ namespace Arif.Scripts
                 //todo UI ekle
                 if (_motherPoint>=1f)
                 {
-                    //todo oyunu bitir
+                    playerController.playerAnimator.SetTrigger("Spiderman");
                 }
 
             }
@@ -121,6 +121,7 @@ namespace Arif.Scripts
         {
             currentLevelState = LevelStates.MainGame;
             DetermineOrder();
+            playerController.playerAnimator.SetBool("Run",true);
         }
         
         private void Update()

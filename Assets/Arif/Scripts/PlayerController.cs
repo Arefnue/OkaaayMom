@@ -10,5 +10,6 @@ namespace Arif.Scripts
         public Collider hardCollider;
         public Collider triggerCollider;
         public Rigidbody myRb;
+        public Animator playerAnimator;
     }
 }
