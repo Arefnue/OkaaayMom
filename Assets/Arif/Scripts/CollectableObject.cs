@@ -13,30 +13,50 @@ namespace Arif.Scripts
         private void Start()
         {
             canCollect = false;
-            meshRenderer.material.color = Color.green;
+            if (meshRenderer)
+            {
+                meshRenderer.material.color = Color.green;
+            }
+            
         }
 
 
         public void MakeMeUI()
         {
-            meshRenderer.gameObject.layer = 8;
+            if (meshRenderer)
+            {
+                meshRenderer.gameObject.layer = 8;
+            }
+           
         }
 
         public void MakeMeNormal()
         {
-            meshRenderer.gameObject.layer = 0;
+            if (meshRenderer)
+            {
+                meshRenderer.gameObject.layer = 0;
+            }
+           
         }
         
         public void OnPlayerEnter()
         {
             canCollect = true;
-            meshRenderer.material.color = Color.white;
+            if (meshRenderer)
+            {
+                meshRenderer.material.color = Color.white;
+            }
+            
         }
 
         public void OnPlayerExit()
         {
             canCollect = false;
-            meshRenderer.material.color = Color.green;
+            if (meshRenderer)
+            {
+                meshRenderer.material.color = Color.green;
+            }
+            
         }
 
         private void OnTriggerEnter(Collider other)
