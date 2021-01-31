@@ -68,16 +68,20 @@ namespace Arif.Scripts
                 crediSlider.value = _credibilityPoint;
                 if (_credibilityPoint>=1f)
                 {
+                    _checkBool = true;
                     playerController.playerAnimator.SetTrigger("Spiderman");
                     currentLevelState = LevelStates.Finish;
                     
-                    Win();
+                    dayPanel.SetActive(false);
+                    winPanel.SetActive(true);
                 }
                 else if (_credibilityPoint<=0f)
                 {
+                    _checkBool = true;
+                    dayPanel.SetActive(false);
+                    losePanel.SetActive(true);
                     playerController.playerAnimator.SetTrigger("Spiderman");
                     currentLevelState = LevelStates.Finish;
-                    Lose();
                 }
             }
         }
@@ -89,7 +93,9 @@ namespace Arif.Scripts
 
         private IEnumerator DelayLose()
         {
+            dayPanel.SetActive(false);
             yield return new WaitForSeconds(2.5f);
+            dayPanel.SetActive(false);
             losePanel.SetActive(true);
         }
 
@@ -100,7 +106,9 @@ namespace Arif.Scripts
 
         private IEnumerator DelayWin()
         {
+            dayPanel.SetActive(false);
             yield return new WaitForSeconds(1.5f);
+            dayPanel.SetActive(false);
             winPanel.SetActive(true);
         }
         
@@ -122,6 +130,7 @@ namespace Arif.Scripts
                 if (_motherPoint>=1f)
                 {
                     MamaAttack();
+                    _checkBool = true;
                     currentLevelState = LevelStates.Finish;
                     Lose();
                 }
@@ -136,6 +145,7 @@ namespace Arif.Scripts
         }
 
         private float _motherPoint = 0f;
+        private bool _checkBool;
 
         [HideInInspector]public float dayTimer;
 
@@ -218,7 +228,15 @@ namespace Arif.Scripts
                 if (dayTimer>= maxDayTime)
                 {
                     currentLevelState = LevelStates.Finish;
-                    ShowDayPanel();
+                    if (_checkBool)
+                    {
+                        dayPanel.SetActive(false);
+                    }
+                    else
+                    {
+                        ShowDayPanel();
+                    }
+                   
                 
                 }
                 
