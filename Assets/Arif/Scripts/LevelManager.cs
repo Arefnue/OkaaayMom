@@ -89,7 +89,7 @@ namespace Arif.Scripts
 
         private IEnumerator DelayLose()
         {
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(1.5f);
             losePanel.SetActive(true);
         }
 
@@ -100,7 +100,7 @@ namespace Arif.Scripts
 
         private IEnumerator DelayWin()
         {
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(1.5f);
             winPanel.SetActive(true);
         }
         
@@ -443,18 +443,14 @@ namespace Arif.Scripts
             {
                 if (orderedCollectableList.Contains(so))
                 {
-                    rightOrderCount++;
+                    credibilityPoint+=credibilityIncreaseValue;
+                }
+                else
+                {
+                    credibilityPoint-=credibilityDecreaseValue;
                 }
             }
-
-            if (rightOrderCount>=orderedCollectableList.Count)
-            {
-                credibilityPoint += rightOrderCount*credibilityIncreaseValue;
-            }
-            else
-            {
-                credibilityPoint -= credibilityDecreaseValue/rightOrderCount;
-            }
+            
         }
     }
 }

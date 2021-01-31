@@ -1310,7 +1310,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 0.5
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -2817,8 +2817,8 @@ MonoBehaviour:
   maxDayTime: 25
   timerText: {fileID: 7961985245871135030}
   orderedImageList: []
-  credibilityIncreaseValue: 0.2
-  credibilityDecreaseValue: 0.1
+  credibilityIncreaseValue: 0.1
+  credibilityDecreaseValue: 0.5
   motherDecreaseValue: 0.1
   MomImgs:
   - {fileID: 2800000, guid: d166abbf979f2ee44a02d298221f5150, type: 3}
