@@ -33,7 +33,7 @@ public class MusicController : MonoBehaviour
         float maxdaytime = LevelManager.Manager.maxDayTime;
         float daytimer = LevelManager.Manager.dayTimer;
         float MVal = (daytimer / maxdaytime);
-        Debug.Log(MVal);
+       
         Part1.volume = Part1Curve.Evaluate(MVal);
         Part2.volume = Part2Curve.Evaluate(MVal);
         Part3.volume = Part3Curve.Evaluate(MVal);

@@ -20,6 +20,11 @@ namespace Arif.Scripts
             SceneManager.LoadScene(1);
         }
 
+        public void PreScene()
+        {
+            SceneManager.LoadScene(0);
+        }
+        
         public void CloseGame()
         {
             Application.Quit();
