@@ -46,12 +46,17 @@ namespace Arif.Scripts
 
              
         [HideInInspector]public List<OrderedImage> orderedImageList = new List<OrderedImage>();
-        
+
+        public float credibilityIncreaseValue;
+        public float credibilityDecreaseValue;
+        public float motherDecreaseValue;
 
         [HideInInspector] public float credibilityPoint;
         [HideInInspector] public float motherPoint;
         [HideInInspector] public float dayTimer;
-        
+
+        private Vector3 _playerStartPos;
+
         private void Awake()
         {
             Manager = this;
@@ -60,6 +65,7 @@ namespace Arif.Scripts
         private void Start()
         {
            StartGame();
+           _playerStartPos = playerController.transform.position;
         }
 
 
@@ -104,7 +110,29 @@ namespace Arif.Scripts
 
         public void FinishLevel()
         {
+            ResetLevel();
             CheckRightness();
+        }
+
+        public void ResetLevel()
+        {
+            dayTimer = 0;
+            playerController.transform.position = _playerStartPos;
+            
+            collectedProfileList?.Clear();
+            foreach (var VARIABLE in orderedImageList)
+            {
+                Destroy(VARIABLE.gameObject);
+            }
+            orderedImageList?.Clear();
+            orderedCollectableList?.Clear();
+
+            foreach (var VARIABLE in _collectableImageList)
+            {
+                Destroy(VARIABLE.gameObject);
+            }
+            _collectableImageList?.Clear();
+            StartGame();
         }
         
         public void SelectAtWar()
@@ -190,6 +218,8 @@ namespace Arif.Scripts
                 }
             }
         }
+        
+        private List<CollectableImage> _collectableImageList = new List<CollectableImage>();
        
         public void CollectObject(CollectableObject collectableObject)
         {
@@ -201,7 +231,7 @@ namespace Arif.Scripts
                 return;
             }
             var cloneObject = Instantiate(collectableImagePrefab,bagContentTransform);
-
+            _collectableImageList.Add(cloneObject);
             cloneObject.myImage.sprite = collectableObject.collectableProfile.myUISprite;
             collectedProfileList.Add(collectableObject.collectableProfile);
             cloneObject.myObject = collectableObject;
@@ -237,11 +267,11 @@ namespace Arif.Scripts
 
             if (rightOrderCount>=orderedCollectableList.Count)
             {
-                Debug.Log("Win");
+                credibilityPoint += credibilityIncreaseValue;
             }
             else
             {
-                Debug.Log("Lose");
+                credibilityPoint -= credibilityDecreaseValue;
             }
         }
     }

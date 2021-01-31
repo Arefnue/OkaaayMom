@@ -1422,6 +1422,10 @@ MonoBehaviour:
   rightOrderCount: 0
   maxDayTime: 60
   timerText: {fileID: 1847778412}
+  orderedImageList: []
+  credibilityIncreaseValue: 0.2
+  credibilityDecreaseValue: 0.1
+  motherDecreaseValue: 0.1
   credibilityPoint: 0
   motherPoint: 0
   dayTimer: 0
