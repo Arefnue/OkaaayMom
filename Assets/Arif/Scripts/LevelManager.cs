@@ -100,6 +100,9 @@ namespace Arif.Scripts
 
         [HideInInspector]public float dayTimer;
 
+        public Transform cameraRoot;
+        public Transform mainCamPos;
+
         private Vector3 _playerStartPos;
 
         private void Awake()
@@ -128,6 +131,7 @@ namespace Arif.Scripts
                     break;
                 case LevelStates.MainGame:
                     MovePlayer();
+                    //MoveWithKeyboard();
                     SelectObject();
                     break;
                 case LevelStates.Finish:
@@ -157,6 +161,25 @@ namespace Arif.Scripts
             
 
         }
+        
+
+        private void LateUpdate()
+        {
+            switch (currentLevelState)
+            {
+                case LevelStates.Prepare:
+                    break;
+                case LevelStates.MainGame:
+                    cameraRoot.transform.position = playerController.transform.position;
+                    break;
+                case LevelStates.War:
+                    break;
+                case LevelStates.Finish:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
 
         public void SkipDay()
         {
@@ -175,7 +198,7 @@ namespace Arif.Scripts
         {
             dayTimer = 0;
             playerController.transform.position = _playerStartPos;
-            playerController.playerAgent.SetDestination(_playerStartPos);
+            //playerController.playerAgent.SetDestination(_playerStartPos);
             var orderedChildren = orderListTransform.GetComponentsInChildren<OrderedImage>();
             
             foreach (var VARIABLE in orderedChildren)
@@ -205,6 +228,21 @@ namespace Arif.Scripts
                     }
                 }
             }
+        }
+
+        public void MoveWithKeyboard()
+        {
+            var horizontal = Input.GetAxis("Horizontal");
+            var vertical = Input.GetAxis("Vertical");
+            
+            var moveDir = new Vector3(horizontal,0,vertical);
+
+            playerController.transform.position += moveDir * (5 * Time.deltaTime);
+                
+            playerController.transform.localRotation = Quaternion.LookRotation(moveDir);
+
+        
+
         }
 
         public void MovePlayer()
