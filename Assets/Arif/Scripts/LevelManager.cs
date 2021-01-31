@@ -90,13 +90,14 @@ namespace Arif.Scripts
                 //todo UI ekle
                 if (_motherPoint>=1f)
                 {
-                    playerController.playerAnimator.SetTrigger("Spiderman");
+                    MamaAttack();
+                    currentLevelState = LevelStates.Finish;
                 }
 
             }
         }
 
-        private float _motherPoint = 1f;
+        private float _motherPoint = 0f;
 
         [HideInInspector]public float dayTimer;
 
@@ -104,6 +105,9 @@ namespace Arif.Scripts
         public Transform mainCamPos;
 
         private Vector3 _playerStartPos;
+
+        public List<MamaAttack> mamaList;
+        
 
         private void Awake()
         {
@@ -122,6 +126,15 @@ namespace Arif.Scripts
             currentLevelState = LevelStates.MainGame;
             DetermineOrder();
             playerController.playerAnimator.SetBool("Run",true);
+        }
+
+        public void MamaAttack()
+        {
+            foreach (var VARIABLE in mamaList)
+            {
+                VARIABLE.gameObject.SetActive(true);
+                VARIABLE.Attack();
+            }
         }
         
         private void Update()
@@ -147,6 +160,11 @@ namespace Arif.Scripts
             }
 
 
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                playerController.playerAnimator.SetTrigger("Spiderman");
+            }
+            
             if (currentLevelState != LevelStates.Finish && currentLevelState != LevelStates.Prepare)
             {
                 dayTimer += Time.deltaTime;
